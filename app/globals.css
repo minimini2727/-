@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  body {
+    @apply bg-gray-950 text-gray-100 antialiased;
+  }
+}
+
+@layer components {
+  .agent-card {
+    @apply relative overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-2xl transition-all duration-300;
+  }
+
+  .agent-card:hover {
+    @apply border-gray-700 shadow-gray-900/50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-950 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .status-dot {
+    @apply h-2 w-2 rounded-full;
+  }
+
+  .output-content {
+    @apply prose prose-invert prose-sm max-w-none;
+  }
+
+  .output-content h1,
+  .output-content h2,
+  .output-content h3 {
+    @apply text-white;
+  }
+
+  .output-content p {
+    @apply text-gray-300;
+  }
+
+  .output-content ul,
+  .output-content ol {
+    @apply text-gray-300;
+  }
+
+  .output-content strong {
+    @apply text-white font-semibold;
+  }
+
+  .output-content a {
+    @apply text-sky-400 hover:text-sky-300;
+  }
+
+  .output-content code {
+    @apply rounded bg-gray-800 px-1 py-0.5 text-sky-300;
+  }
+
+  .output-content blockquote {
+    @apply border-l-4 border-sky-500 pl-4 text-gray-400 italic;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #374151 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #374151;
+    border-radius: 3px;
+  }
+}
+
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 4s ease infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
