@@ -1,6 +1,7 @@
 "use client";
 
 import AgentCard from "@/components/AgentCard";
+import InstagramCaptionCard from "@/components/InstagramCaptionCard";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -57,7 +58,7 @@ export default function Home() {
               <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs text-emerald-400 font-medium">
-                  에이전트 2개 준비됨
+                  에이전트 3개 준비됨
                 </span>
               </div>
             </div>
@@ -91,7 +92,7 @@ export default function Home() {
               { icon: "🔍", label: "실시간 웹 검색" },
               { icon: "🧠", label: "딥 리서치 분석" },
               { icon: "📊", label: "마케팅 인사이트" },
-              { icon: "🌐", label: "글로벌 + 국내 트렌드" },
+              { icon: "📸", label: "인스타그램 캡션 생성" },
               { icon: "⚡", label: "스트리밍 응답" },
             ].map((feat) => (
               <div
@@ -111,6 +112,11 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <AgentCard agentType="sns" />
           <AgentCard agentType="news" />
+        </div>
+
+        {/* Instagram Caption Generator */}
+        <div className="mt-6">
+          <InstagramCaptionCard />
         </div>
 
         {/* Setup guide */}
