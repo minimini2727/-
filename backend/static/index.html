@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNS 트렌드 AI 에이전트</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-icon">📡</div>
+          <div>
+            <div class="brand-title">SNS 트렌드 AI</div>
+            <div class="brand-sub">실시간 멀티 플랫폼 트렌드 분석</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div id="sourceStatus" class="source-status"></div>
+          <div class="last-update-wrap">
+            <span class="pulse-dot" id="pulseDot"></span>
+            <span id="lastUpdateText" class="last-update-text">수집 중…</span>
+          </div>
+          <button class="btn-refresh" id="refreshBtn" onclick="App.refreshAll()">
+            <span id="refreshIcon" class="refresh-icon">↻</span>
+            새로고침
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Stats bar ── -->
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat">
+          <span class="stat-val" id="statTotal">—</span>
+          <span class="stat-lbl">총 트렌드</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <span class="stat-val" id="statSources">—</span>
+          <span class="stat-lbl">활성 소스</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <span class="stat-val" id="statUpdated">—</span>
+          <span class="stat-lbl">마지막 업데이트</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <span class="stat-val" id="statAutoRefresh">5분</span>
+          <span class="stat-lbl">자동 새로고침</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Main ── -->
+    <main class="main">
+
+      <!-- Platform tabs + search -->
+      <div class="toolbar">
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-platform="all">전체</button>
+          <button class="tab" data-platform="google">
+            <span class="pdot" style="background:#EA4335"></span>Google 트렌드
+          </button>
+          <button class="tab" data-platform="reddit">
+            <span class="pdot" style="background:#FF4500"></span>Reddit
+          </button>
+          <button class="tab" data-platform="youtube">
+            <span class="pdot" style="background:#FF0000"></span>YouTube
+          </button>
+          <button class="tab" data-platform="rss">
+            <span class="pdot" style="background:#F59E0B"></span>뉴스 RSS
+          </button>
+          <button class="tab" data-platform="instagram">
+            <span class="pdot" style="background:#E1306C"></span>Instagram
+          </button>
+          <button class="tab" data-platform="threads">
+            <span class="pdot" style="background:#a0a0a0"></span>Threads
+          </button>
+        </div>
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="🔍 트렌드 검색…"
+            oninput="App.filter(this.value)"
+          />
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid" id="chartsGrid">
+        <div class="chart-card">
+          <div class="chart-card-title">상위 트렌드 키워드</div>
+          <div class="chart-wrap"><canvas id="topKeywordsChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-title">플랫폼별 수집 현황</div>
+          <div class="chart-wrap"><canvas id="platformDistChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Trend cards grid -->
+      <div id="trendsGrid" class="trends-grid">
+        <div class="empty-state" id="loadingState">
+          <div class="spinner"></div>
+          <p>트렌드 데이터를 수집 중입니다…</p>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>SNS 트렌드 AI · FastAPI + Playwright + pytrends + PRAW</span>
+        <span>데이터는 공개 소스에서 수집됩니다</span>
+      </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
