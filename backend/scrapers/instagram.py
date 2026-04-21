@@ -4,13 +4,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def _playwright_available() -> bool:
+    try:
+        import playwright  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
 class InstagramScraper:
     """
     Scrapes public Instagram hashtag pages via Playwright.
-    Returns empty list when blocked or playwright is unavailable.
+    Returns empty list when blocked or Playwright is unavailable.
     """
 
     async def get_hashtag_posts(self, hashtag: str) -> list[dict]:
+        if not _playwright_available():
+            logger.info("Playwright not available — skipping Instagram scrape")
+            return []
         try:
             return await self._scrape_hashtag(hashtag)
         except Exception as e:

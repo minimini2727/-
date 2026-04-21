@@ -4,13 +4,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def _playwright_available() -> bool:
+    try:
+        import playwright  # noqa: F401
+        return True
+    except ImportError:
+        return False
+
+
 class ThreadsScraper:
     """
     Scrapes public Threads trending posts via Playwright.
-    Returns empty list when blocked or playwright is unavailable.
+    Returns empty list when blocked or Playwright is unavailable.
     """
 
     async def get_trending(self) -> list[dict]:
+        if not _playwright_available():
+            logger.info("Playwright not available — skipping Threads scrape")
+            return []
         try:
             return await self._scrape_threads()
         except Exception as e:
@@ -32,7 +43,11 @@ class ThreadsScraper:
                     viewport={"width": 1280, "height": 900},
                 )
                 page = await context.new_page()
-                await page.goto("https://www.threads.net/", wait_until="domcontentloaded", timeout=20000)
+                await page.goto(
+                    "https://www.threads.net/",
+                    wait_until="domcontentloaded",
+                    timeout=20000,
+                )
                 await asyncio.sleep(4)
 
                 posts = await page.evaluate("""
