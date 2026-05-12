@@ -28,13 +28,13 @@ export async function POST(request: NextRequest) {
           const messageStream = await client.messages.stream({
             model: "claude-opus-4-6",
             max_tokens: 8000,
-            thinking: { type: "adaptive" },
+            thinking: { type: "adaptive" } as any,
             tools: [
               {
                 type: "web_search_20260209",
                 name: "web_search",
                 max_uses: 5,
-              } as Anthropic.Messages.WebSearchTool20260209,
+              } as any,
             ],
             system: `당신은 AI 마케팅 뉴스 전문 분석가입니다.
 마케터들을 위해 최신 AI 관련 마케팅 뉴스를 수집하고 심층 분석합니다.
