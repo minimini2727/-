@@ -5,9 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "마케팅 AI 에이전트 플랫폼",
+  title: "ADVoost — 네이버 SA AI 엔진 시뮬레이터",
   description:
-    "SNS 트렌드 리서처와 AI 마케팅 뉴스 분석가 두 에이전트가 실시간으로 마케팅 인사이트를 제공합니다.",
+    "광고 키워드·소재·랜딩페이지를 입력하면 ADVoost 엔진이 4대 핵심 지표(광고 연관지수·클릭 기대지수·랜딩 경험지수·콘텐츠 신선도)를 즉시 분석합니다.",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} style={{ margin: 0 }}>{children}</body>
     </html>
   );
 }

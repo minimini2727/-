@@ -28,13 +28,13 @@ export async function POST(request: NextRequest) {
           const messageStream = await client.messages.stream({
             model: "claude-opus-4-6",
             max_tokens: 8000,
-            thinking: { type: "adaptive" },
+            thinking: { type: "adaptive" } as any,
             tools: [
               {
                 type: "web_search_20260209",
                 name: "web_search",
                 max_uses: 5,
-              } as Anthropic.Messages.WebSearchTool20260209,
+              } as any,
             ],
             system: `당신은 최신 SNS(소셜 미디어) 트렌드 전문 리서처입니다.
 마케터들을 위해 매일 최신 SNS 트렌드를 조사하고 분석합니다.

@@ -1,186 +1,160 @@
-"use client";
+'use client';
 
-import AgentCard from "@/components/AgentCard";
-import { useState, useEffect } from "react";
+import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import { AuthProvider } from '@/context/AuthContext';
 
-export default function Home() {
-  const [currentTime, setCurrentTime] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
+const G = '#03C75A';
+const DARK = '#1a2035';
 
-  useEffect(() => {
-    const update = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("ko-KR", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-      setCurrentDate(
-        now.toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          weekday: "long",
-        })
-      );
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
+const metrics = [
+  { icon: '🎯', title: '광고 연관지수', desc: '키워드·소재·랜딩페이지 간 시맨틱 유사도를 AI로 정밀 분석' },
+  { icon: '👆', title: '클릭 기대지수', desc: '검색 의도 대비 소재 매력도·CTA·혜택 가시성 종합 평가' },
+  { icon: '📄', title: '랜딩 경험지수', desc: '정보 완결성, 모바일 UX, 전환 흐름의 품질 측정' },
+  { icon: '✨', title: '콘텐츠 신선도', desc: '2026 최신 트렌드 반영도와 소재 차별성 스캐닝' },
+];
 
+const plans = [
+  {
+    name: 'Free', price: '₩0', period: '/월', color: '#718096',
+    limit: '월 10회 분석',
+    features: ['4대 핵심 지표 분석', 'AI 최적화 가이드 3종', '분석 히스토리 30일', '기본 지원'],
+    cta: '무료로 시작', to: '/register', highlight: false,
+  },
+  {
+    name: 'Pro', price: '₩29,000', period: '/월', color: G,
+    limit: '무제한 분석',
+    features: ['무제한 광고 분석', '상세 점수 리포트', 'CSV 내보내기', '히스토리 무제한', '우선 이메일 지원'],
+    cta: 'Pro 시작하기', to: '/register', highlight: true,
+  },
+  {
+    name: 'Enterprise', price: '문의', period: '', color: '#805ad5',
+    limit: '맞춤형 한도',
+    features: ['팀 멤버 공유', 'API 직접 연동', 'SLA 보장', '전담 매니저'],
+    cta: '문의하기', to: 'mailto:hello@advoost.io', highlight: false,
+  },
+];
+
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Header */}
-      <header className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-900/30">
-                <span className="text-lg">⚡</span>
-              </div>
-              <div>
-                <h1 className="text-base font-bold text-white leading-tight">
-                  마케팅 AI 에이전트
-                </h1>
-                <p className="text-xs text-gray-500">Marketing Intelligence Platform</p>
-              </div>
-            </div>
+    <AuthProvider>
+      <div style={{ background: '#fff', minHeight: '100vh' }}>
+        <Navbar />
 
-            <div className="hidden sm:flex items-center gap-6">
-              <div className="text-right">
-                <p className="text-xs text-gray-500">{currentDate}</p>
-                <p className="text-sm font-mono text-gray-300">{currentTime}</p>
-              </div>
-              <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs text-emerald-400 font-medium">
-                  에이전트 2개 준비됨
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+        {/* Hero */}
+        <section style={{
+          paddingTop: 140, paddingBottom: 100, textAlign: 'center',
+          background: `linear-gradient(180deg, #f0faf5 0%, #fff 100%)`,
+        }}>
+          <div style={{
+            display: 'inline-block', background: '#e6f9ef', color: G,
+            fontSize: 12, fontWeight: 700, padding: '4px 14px', borderRadius: 20,
+            marginBottom: 20, letterSpacing: 0.5,
+          }}>2026 ADVoost ENGINE · POWERED BY CLAUDE AI</div>
 
-      {/* Hero section */}
-      <div className="border-b border-gray-800/50 bg-gradient-to-b from-gray-900 to-gray-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-xs text-violet-400 font-medium mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-              Claude Opus 4.6 + 실시간 웹 검색 탑재
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-              마케터를 위한{" "}
-              <span className="bg-gradient-to-r from-violet-400 to-emerald-400 bg-clip-text text-transparent">
-                AI 인텔리전스
-              </span>
-            </h2>
-            <p className="text-gray-400 text-base max-w-2xl mx-auto">
-              두 전문 AI 에이전트가 실시간으로 SNS 트렌드와 AI 마케팅 뉴스를
-              수집·분석하여 즉시 활용 가능한 인사이트를 제공합니다.
-            </p>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, color: DARK, lineHeight: 1.2, marginBottom: 20 }}>
+            네이버 검색광고 성과를<br />
+            <span style={{ color: G }}>AI로 예측하고 최적화</span>하세요
+          </h1>
+          <p style={{ fontSize: 18, color: '#718096', maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.7 }}>
+            광고 키워드·소재·랜딩페이지를 입력하면<br />
+            ADVoost 엔진이 4대 핵심 지표를 즉시 분석합니다
+          </p>
+
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/register" style={{
+              background: G, color: '#fff', fontWeight: 700, fontSize: 16,
+              padding: '14px 32px', borderRadius: 10, display: 'inline-block', textDecoration: 'none',
+            }}>무료로 시작하기 →</Link>
+            <Link href="/login" style={{
+              background: '#fff', color: DARK, fontWeight: 600, fontSize: 16,
+              padding: '14px 32px', borderRadius: 10, border: '1.5px solid #e2e8f0', display: 'inline-block', textDecoration: 'none',
+            }}>로그인</Link>
           </div>
 
-          {/* Feature pills */}
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {[
-              { icon: "🔍", label: "실시간 웹 검색" },
-              { icon: "🧠", label: "딥 리서치 분석" },
-              { icon: "📊", label: "마케팅 인사이트" },
-              { icon: "🌐", label: "글로벌 + 국내 트렌드" },
-              { icon: "⚡", label: "스트리밍 응답" },
-            ].map((feat) => (
-              <div
-                key={feat.label}
-                className="flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800/50 px-4 py-2 text-sm text-gray-300"
-              >
-                <span>{feat.icon}</span>
-                <span>{feat.label}</span>
+          <p style={{ fontSize: 12, color: '#a0aec0', marginTop: 16 }}>신용카드 불필요 · 월 10회 무료 제공</p>
+        </section>
+
+        {/* 4 Metrics */}
+        <section style={{ padding: '80px 24px', maxWidth: 960, margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: 28, fontWeight: 800, color: DARK, marginBottom: 8 }}>
+            4대 핵심 최적화 지표
+          </h2>
+          <p style={{ textAlign: 'center', color: '#718096', fontSize: 15, marginBottom: 48 }}>
+            네이버 ADVoost 엔진의 실제 로직을 AI로 시뮬레이션합니다
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+            {metrics.map(({ icon, title, desc }) => (
+              <div key={title} style={{
+                background: '#fff', border: '1px solid #e8edf5', borderRadius: 16,
+                padding: '28px 24px', transition: 'box-shadow 0.2s',
+              }}>
+                <div style={{ fontSize: 32, marginBottom: 14 }}>{icon}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: DARK, marginBottom: 8 }}>{title}</div>
+                <div style={{ fontSize: 13, color: '#718096', lineHeight: 1.6 }}>{desc}</div>
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Agent cards grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <AgentCard agentType="sns" />
-          <AgentCard agentType="news" />
-        </div>
-
-        {/* Setup guide */}
-        <div className="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-6">
-          <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
-            <span>🚀</span>
-            시작 가이드
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="rounded-xl border border-gray-700/50 bg-gray-800/50 p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
-                  1
-                </span>
-                <span className="text-sm font-medium text-white">API 키 설정</span>
-              </div>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <code className="rounded bg-gray-700 px-1.5 py-0.5 text-gray-300">
-                  .env.local
-                </code>{" "}
-                파일에{" "}
-                <code className="rounded bg-gray-700 px-1.5 py-0.5 text-gray-300">
-                  ANTHROPIC_API_KEY
-                </code>
-                를 설정하세요
-              </p>
-            </div>
-            <div className="rounded-xl border border-gray-700/50 bg-gray-800/50 p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
-                  2
-                </span>
-                <span className="text-sm font-medium text-white">에이전트 선택</span>
-              </div>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                SNS 트렌드 또는 AI 뉴스 에이전트를 선택하고 분석하고 싶은 주제를
-                입력하세요
-              </p>
-            </div>
-            <div className="rounded-xl border border-gray-700/50 bg-gray-800/50 p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-600 text-xs font-bold text-white">
-                  3
-                </span>
-                <span className="text-sm font-medium text-white">인사이트 활용</span>
-              </div>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                실시간으로 생성되는 분석 리포트를 복사하여 마케팅 전략에 즉시 활용하세요
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-gray-600">
-              Powered by{" "}
-              <span className="text-gray-500">Claude Opus 4.6</span> &{" "}
-              <span className="text-gray-500">Web Search</span>
+        {/* Pricing */}
+        <section id="pricing" style={{ padding: '80px 24px', background: '#f7f9fc' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <h2 style={{ textAlign: 'center', fontSize: 28, fontWeight: 800, color: DARK, marginBottom: 8 }}>
+              합리적인 요금제
+            </h2>
+            <p style={{ textAlign: 'center', color: '#718096', fontSize: 15, marginBottom: 48 }}>
+              팀 규모에 맞게 선택하세요
             </p>
-            <div className="flex items-center gap-4 text-xs text-gray-600">
-              <span>🔒 API 키는 서버에서만 처리됩니다</span>
-              <span>⚡ 실시간 스트리밍</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
+              {plans.map(p => (
+                <div key={p.name} style={{
+                  background: '#fff', borderRadius: 16, padding: '32px 24px',
+                  border: p.highlight ? `2px solid ${G}` : '1px solid #e2e8f0',
+                  position: 'relative',
+                }}>
+                  {p.highlight && (
+                    <div style={{
+                      position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)',
+                      background: G, color: '#fff', fontSize: 11, fontWeight: 700,
+                      padding: '4px 14px', borderRadius: 20, whiteSpace: 'nowrap',
+                    }}>가장 인기</div>
+                  )}
+                  <div style={{ fontSize: 13, fontWeight: 700, color: p.color, marginBottom: 8 }}>{p.name}</div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
+                    <span style={{ fontSize: 28, fontWeight: 800, color: DARK }}>{p.price}</span>
+                    <span style={{ fontSize: 13, color: '#a0aec0' }}>{p.period}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: '#a0aec0', marginBottom: 24, paddingBottom: 20, borderBottom: '1px solid #f0f4f8' }}>
+                    {p.limit}
+                  </div>
+                  {p.features.map(f => (
+                    <div key={f} style={{ display: 'flex', gap: 8, marginBottom: 10, fontSize: 13, color: '#4a5568' }}>
+                      <span style={{ color: G, flexShrink: 0 }}>✓</span>{f}
+                    </div>
+                  ))}
+                  <Link href={p.to} style={{
+                    display: 'block', textAlign: 'center', marginTop: 24,
+                    padding: '12px 0', borderRadius: 10, fontWeight: 700, fontSize: 14,
+                    background: p.highlight ? G : '#f7f9fc',
+                    color: p.highlight ? '#fff' : DARK,
+                    border: p.highlight ? 'none' : '1px solid #e2e8f0',
+                    textDecoration: 'none',
+                  }}>{p.cta}</Link>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        </section>
+
+        {/* Footer */}
+        <footer style={{ padding: '40px 24px', textAlign: 'center', borderTop: '1px solid #e8edf5' }}>
+          <div style={{ fontWeight: 800, fontSize: 16, color: DARK, marginBottom: 8 }}>ADVoost</div>
+          <p style={{ fontSize: 12, color: '#a0aec0' }}>
+            © 2026 ADVoost. 네이버 공식 서비스가 아닙니다. AI 예측 기반 참고용 서비스입니다.
+          </p>
+        </footer>
+      </div>
+    </AuthProvider>
   );
 }
